@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">storereview_review_create.review_create_data_source</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+
+    <settings>
+        <namespace>storereview_review_create</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>storereview_review_create.review_create_data_source</dep>
+        </deps>
+
+        <buttons>
+            <button name="back">
+                <label>Back</label>
+                <class>back</class>
+                <url path="storereview/review/index"/>
+            </button>
+            <button name="save">
+                <label translate="true">Save Store Review</label>
+                <class>save primary</class>
+            </button>
+        </buttons>
+    </settings>
+    
+    <dataSource name="review_create_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="storereview/review/insert"/>
+        </settings>
+        <dataProvider class="Inchoo\StoreReview\Ui\Component\ReviewDataProvider" name="review_create_data_source">
+            <settings>
+                <requestFieldName>review_id</requestFieldName>
+                <primaryFieldName>review_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    
+    <fieldset name="general">
+        <settings>
+            <label />
+        </settings>
+
+        <hidden name="review_id" sortOrder="1">
+            <settings>
+                <dataScope>review_id</dataScope>
+            </settings>
+        </hidden>
+
+        <input name="title" sortOrder="10">
+            <settings>
+                <label translate="true">Title</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataScope>title</dataScope>
+            </settings>
+        </input>
+
+        <textarea name="review" sortOrder="20">
+            <settings>
+                <label translate="true">Store Review</label>
+                <dataScope>review</dataScope>
+            </settings>
+        </textarea>
+
+        <field name="statuses">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Inchoo\StoreReview\Model\Options\Source\Statuses</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">storereview</item>
+                    <item name="dataScope" xsi:type="string">status_id</item>
+                    <item name="default" xsi:type="string">2</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
+    </fieldset>
+</form>

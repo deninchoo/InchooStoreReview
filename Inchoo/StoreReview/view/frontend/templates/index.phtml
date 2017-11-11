@@ -1,0 +1,47 @@
+<?php
+/**
+ * @var \Inchoo\StoreReview\Block\Index $block
+ */
+$data = $this->execute();
+?>
+<?php if ($block->execute()->getId()): ?>
+    <div class="table-wrapper reviews">
+        <table class="data table table-reviews" id="my-reviews-table">
+            <caption class="table-caption"><?= $block->escapeHtml(__('Product Reviews')) ?></caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col summary"><?= $block->escapeHtml(__('Title')) ?></th>
+                <th scope="col" class="col description"><?= $block->escapeHtml(__('Review')) ?></th>
+                <th scope="col" class="col actions"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Title')) ?>" class="col description">
+                        <?= $block->escapeHtml($data->getTitle()) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Review')) ?>" class="col description">
+                        <?= $block->escapeHtml($data->getReview()) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Edit')) ?>" class="col description">
+                        <a href="<?= $block->escapeUrl($block->getStoreReviewUrl()) ?>" class="action more">
+                            <span><?= $block->escapeHtml(__('Edit')) ?></span>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<?php if ($block->getToolbarHtml()): ?>
+    <div class="toolbar products-reviews-toolbar bottom">
+        <?= $block->getToolbarHtml() ?>
+    </div>
+<?php endif; ?>
+<?php else: ?>
+<div class="message info empty"><span><?= $block->escapeHtml(__('You don\'t have a store review yet.')) ?></span></div>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <a class="action" href="/storereview/index/create"><span><?= $block->escapeHtmlAttr(__('Add a review')) ?></span></a>
+        </div>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,15 @@
+<?php
+
+$reviews = $this->execute(); ?>
+<?php if ($reviews):?>
+    <h1>What people are saying about us:</h1>
+<table class="table">
+    <?php foreach ($reviews as $review): ?>
+        <tr>
+            <td><?= $review->getCustomerId() ?></td>
+            <td><?= $review->getTitle() ?></td>
+            <td><?= $review->getReview() ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+<?php endif;
