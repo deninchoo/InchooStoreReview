@@ -47,7 +47,7 @@ class Show extends \Magento\Framework\View\Element\Template
         $this->searchCriteriaBuilder->setSortOrders([$sortOrder]);
         $this->searchCriteriaBuilder->setPageSize(10);
         $searchCriteria = $this->searchCriteriaBuilder
-            ->addFilter('store_view_id', $currentStoreId, 'eq')
+            ->addFilter('store_id', $currentStoreId, 'eq')
             ->addFilter('status_id', 1, 'eq')
             ->create();
 
