@@ -62,10 +62,10 @@
                 <sorting>desc</sorting>
             </settings>
         </column>
-        <column name="customer_id" sortOrder="20">
+        <column name="customer_name" sortOrder="20">
             <settings>
                 <filter>textRange</filter>
-                <label translate="true">Customer ID</label>
+                <label translate="true">Customer</label>
             </settings>
         </column>
         <column name="title" sortOrder="30">
