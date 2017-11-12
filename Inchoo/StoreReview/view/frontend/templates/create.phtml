@@ -1,9 +1,15 @@
 <?php
 /**
- * @var \Inchoo\StoreReview\Block\Edit $block
+ * @var \Inchoo\StoreReview\Block\Create $block
  */
-$data = $this->execute();
+if($block->execute()->getId()):
 ?>
+    <p>You already created a store review</p>
+    <div class="primary">
+        <a class="action" href="/storereview/index/edit"><span><?= $block->escapeHtmlAttr(__('Edit your store review')) ?></span></a>
+    </div>
+
+<?php else: ?>
 <form class="form"
       action="<?= $block->escapeUrl($block->getUrl('storereview/index/createpost', ['_secure' => true])) ?>"
       id="store-review-form"
@@ -16,13 +22,13 @@ $data = $this->execute();
         <div class="field title required">
             <label class="label" for="title"><span><?= $block->escapeHtml(__('Title')) ?></span></label>
             <div class="control">
-                <input name="title" id="title" title="<?= $block->escapeHtmlAttr(__('Title')) ?>" value="<?= $block->escapeHtml($data->getTitle()) ?>" class="input-text" type="text" data-validate="{required:true}"/>
+                <input name="title" id="title" title="<?= $block->escapeHtmlAttr(__('Title')) ?>" value="" class="input-text" type="text" data-validate="{required:true}"/>
             </div>
         </div>
         <div class="field comment required">
             <label class="label" for="review"><span><?= $block->escapeHtml(__('Review')) ?></span></label>
             <div class="control">
-                <textarea name="review" id="review" title="<?= $block->escapeHtmlAttr(__('Review')) ?>" class="input-text" cols="5" rows="3" data-validate="{required:true}"><?= $block->escapeHtml($data->getReview()) ?></textarea>
+                <textarea name="review" id="review" title="<?= $block->escapeHtmlAttr(__('Review')) ?>" class="input-text" cols="5" rows="3" data-validate="{required:true}"></textarea>
             </div>
         </div>
         <?= $block->getChildHtml('form.additional.info') ?>
@@ -36,3 +42,4 @@ $data = $this->execute();
         </div>
     </div>
 </form>
+<?php endif; ?>

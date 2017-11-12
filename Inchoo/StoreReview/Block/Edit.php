@@ -85,7 +85,6 @@ class Edit extends Template
         $storeReview = $this->customerFactory->create();
         $id = $this->_session->getCustomer()->getId();
         $this->customerResource->load($storeReview, $id);
-
         return $storeReview;
     }
 
