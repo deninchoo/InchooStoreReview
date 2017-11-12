@@ -46,8 +46,8 @@ class Insert extends Action
     public function execute()
     {
         $data = $this->getRequest()->getPostValue();
-        $currentStore = $this->storeManagerInterface->getStore();
-        $currentStoreId = $currentStore->getId();
+//        $currentStore = $this->storeManagerInterface->getStore();
+//        $currentStoreId = $currentStore->getId();
 
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
@@ -61,7 +61,7 @@ class Insert extends Action
             $model->setReview($this->getRequest()->getParam('review'));
             $model->setStatusId($this->getRequest()->getParam('status_id'));
             $model->setCustomerName($this->getRequest()->getParam('customer_name'));
-            $model->setStoreViewId($currentStoreId);
+            $model->setStoreId($this->getRequest()->getParam('store_id'));
 
             try {
                 $this->dataResource->save($model);

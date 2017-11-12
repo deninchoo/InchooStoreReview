@@ -71,12 +71,6 @@ class InstallSchema implements InstallSchemaInterface
             5,
             ['unsigned' => true],
             'Store View ID'
-        )->addForeignKey(
-            $setup->getFkName('inchoo_store_review', 'status_id', 'inchoo_store_review_status', 'status_id'),
-            'status_id',
-            $setup->getTable('inchoo_store_review_status'),
-            'status_id',
-            \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
         )->setComment(
             'Store Review Table'
         );
@@ -99,6 +93,12 @@ class InstallSchema implements InstallSchemaInterface
                 'Store Review Status Table'
             );
 
+//        ->addForeignKey(
+//        $setup->getFkName('inchoo_store_review', 'status_id', 'inchoo_store_review_status', 'status_id'),
+//        'status_id',
+//        $setup->getTable('inchoo_store_review_status'),
+//        'status_id',
+//        \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
 //        ->addForeignKey(
 //        $setup->getFkName('inchoo_store_review', 'customer_id', 'customer_entity', 'entity_id'),
 //        'customer_id',
