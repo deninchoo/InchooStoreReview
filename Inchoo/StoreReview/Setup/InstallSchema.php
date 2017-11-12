@@ -66,7 +66,7 @@ class InstallSchema implements InstallSchemaInterface
             ['unsigned' => true],
             'Status ID'
         )->addColumn(
-            'store_view_id',
+            'store_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
             5,
             ['unsigned' => true],
