@@ -60,6 +60,7 @@ class Insert extends Action
             $model->setTitle($this->getRequest()->getParam('title'));
             $model->setReview($this->getRequest()->getParam('review'));
             $model->setStatusId($this->getRequest()->getParam('status_id'));
+            $model->setCustomerName($this->getRequest()->getParam('customer_name'));
             $model->setStoreViewId($currentStoreId);
 
             try {
