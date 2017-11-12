@@ -43,7 +43,8 @@ class CreatePost extends Action
             $model->setData($data);
             $model->setCustomerId($this->session->getCustomer()->getId());
             $model->setStatusId(2);
-            $model->setStoreViewId($currentStoreId);
+            $model->setStoreId($currentStoreId);
+            $model->setCustomerName($this->session->getCustomer()->getName());
 
 
             try {
