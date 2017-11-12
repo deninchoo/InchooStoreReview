@@ -36,6 +36,12 @@ class InstallSchema implements InstallSchemaInterface
             ['unsigned' => true],
             'Customer ID'
         )->addColumn(
+            'customer_name',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+            255,
+            [],
+            'Customer Name'
+        )->addColumn(
             'review',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             255,
