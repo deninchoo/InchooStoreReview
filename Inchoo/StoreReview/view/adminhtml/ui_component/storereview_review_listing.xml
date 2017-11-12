@@ -80,16 +80,16 @@
                 <label translate="true">Store Review</label>
             </settings>
         </column>
-        <column name="store_view_id" sortOrder="45">
+        <column name="store_id" class="Inchoo\StoreReview\Ui\Component\Listing\Column\StoreView" sortOrder="45">
             <settings>
-                <filter>text</filter>
+                <filter>select</filter>
                 <label translate="true">Store View</label>
             </settings>
         </column>
         <column name="status_id" class="Magento\Review\Ui\Component\Listing\Columns\Status" sortOrder="50">
             <settings>
                 <filter>select</filter>
-                <options class="Magento\Review\Ui\Component\Listing\Columns\Status"/>
+                <options class="Inchoo\StoreReview\Ui\Component\Listing\Column\Status"/>
                 <dataType>select</dataType>
                 <label translate="true">Status</label>
             </settings>
