@@ -57,6 +57,16 @@
             </settings>
         </hidden>
 
+        <input name="customer_name" sortOrder="5">
+            <settings>
+                <label translate="true">Customer name</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataScope>customer_name</dataScope>
+            </settings>
+        </input>
+
         <input name="title" sortOrder="10">
             <settings>
                 <label translate="true">Title</label>
@@ -70,6 +80,9 @@
         <textarea name="review" sortOrder="20">
             <settings>
                 <label translate="true">Store Review</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
                 <dataScope>review</dataScope>
             </settings>
         </textarea>
