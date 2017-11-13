@@ -35,7 +35,7 @@ class Insert extends Action
      */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('Inchoo_StoreReview::save');
+        return $this->_authorization->isAllowed('Inchoo_StoreReview::review');
     }
 
     /**
@@ -56,7 +56,7 @@ class Insert extends Action
             $model = $this->dataModelFactory->create();
 
             //$model->setData($data);
-            $model->setCustomerId(0);
+            $model->setCustomerId(null);
             $model->setTitle($this->getRequest()->getParam('title'));
             $model->setReview($this->getRequest()->getParam('review'));
             $model->setStatusId($this->getRequest()->getParam('status_id'));
