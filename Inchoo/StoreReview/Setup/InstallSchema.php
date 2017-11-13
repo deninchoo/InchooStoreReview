@@ -44,20 +44,20 @@ class InstallSchema implements InstallSchemaInterface
         )->addColumn(
             'review',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-            255,
+            [],
             [],
             'Store Review'
         )->addColumn(
             'created_at',
             \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
-            [],
-            [],
+            null,
+            ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT],
             'Created At'
         )->addColumn(
             'updated_at',
             \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
-            [],
-            [],
+            null,
+            ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT_UPDATE],
             'Updated At'
         )->addColumn(
             'status_id',
@@ -71,6 +71,18 @@ class InstallSchema implements InstallSchemaInterface
             5,
             ['unsigned' => true],
             'Store View ID'
+        )->addForeignKey(
+            $setup->getFkName('inchoo_store_review', 'customer_id', 'customer_entity', 'entity_id'),
+            'customer_id',
+            $setup->getTable('customer_entity'),
+            'entity_id',
+            \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+        )->addForeignKey(
+            $setup->getFkName('inchoo_store_review', 'store_id', 'store', 'store_id'),
+            'store_id',
+            $setup->getTable('store'),
+            'store_id',
+            \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
         )->setComment(
             'Store Review Table'
         );
@@ -98,18 +110,6 @@ class InstallSchema implements InstallSchemaInterface
 //        'status_id',
 //        $setup->getTable('inchoo_store_review_status'),
 //        'status_id',
-//        \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
-//        ->addForeignKey(
-//        $setup->getFkName('inchoo_store_review', 'customer_id', 'customer_entity', 'entity_id'),
-//        'customer_id',
-//        $setup->getTable('customer_entity'),
-//        'entity_id',
-//        \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
-//    )->addForeignKey(
-//        $setup->getFkName('inchoo_store_review', 'store_view_id', 'store', 'store_id'),
-//        'store_view_id',
-//        $setup->getTable('store'),
-//        'store_id',
 //        \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
 
         $setup->getConnection()->createTable($statusTable);
