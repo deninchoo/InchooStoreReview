@@ -30,13 +30,16 @@ class Delete extends Action
 
     public function execute()
     {
-
-
         $resultRedirect = $this->resultRedirectFactory->create();
 
-            $reviewId = $this->getRequest()->getParam('review_id');
-            $repo = $this->objectManager->get('Inchoo\StoreReview\Model\StoreReviewRepository');
-            $page = $repo->getbyId($reviewId);
+        $reviewId = $this->getRequest()->getParam('review_id');
+        $repo = $this->objectManager->get('Inchoo\StoreReview\Model\StoreReviewRepository');
+        $page = $repo->getbyId($reviewId);
+        $customerId = $page->getCustomerId();
+        $currentCustomerId = $this->session->getCustomer()->getId();
+        $isLoggedIn = $this->session->isLoggedIn();
+
+        if ($customerId == $currentCustomerId && $isLoggedIn) {
 
             try {
                 $repo->delete($page);
@@ -48,9 +51,7 @@ class Delete extends Action
             } catch (\Exception $e) {
                 $this->messageManager->addErrorMessage($e, __('Something went wrong while saving the Store Review.'));
             }
-
-            $this->_getSession()->setFormData($data);
-            return $resultRedirect->setPath('*/*/edit', ['review_id' => $this->getRequest()->getParam('review_id')]);
+        }
 
         return $resultRedirect->setPath('*/*/');
     }
