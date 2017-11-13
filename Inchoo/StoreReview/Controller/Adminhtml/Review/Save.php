@@ -29,7 +29,7 @@ class Save extends Action
      */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('Inchoo_StoreReview::save');
+        return $this->_authorization->isAllowed('Inchoo_StoreReview::review');
     }
 
     /**
@@ -47,7 +47,11 @@ class Save extends Action
             /** @var \Inchoo\StoreReview\Model\Data $model */
             $model = $this->dataModelFactory->create();
 
-            $model->setData($data);
+            $model->setTitle($this->getRequest()->getParam('title'));
+            $model->setReviewId($this->getRequest()->getParam('review_id'));
+            $model->setReview($this->getRequest()->getParam('review'));
+            $model->setStatusId($this->getRequest()->getParam('status_id'));
+            $model->setStoreId($this->getRequest()->getParam('store_id'));
 
             try {
 
