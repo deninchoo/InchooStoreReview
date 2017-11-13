@@ -19,9 +19,9 @@ class Create extends Template
         Customer $customerResource,
         CustomerFactory $customerFactory,
         Session $session
-    ) {
+    )
+    {
         parent::__construct($context);
-
         $this->customerResource = $customerResource;
         $this->customerFactory = $customerFactory;
         $this->_session = $session;
@@ -33,8 +33,8 @@ class Create extends Template
         return parent::_prepareLayout();
     }
 
-    protected function getFormAction(){
-
+    public function getFormAction()
+    {
         return $this->getUrl('storereview/index/createpost', ['_secure' => true]);
     }
 
