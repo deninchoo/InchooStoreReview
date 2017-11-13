@@ -2,7 +2,7 @@
 
 namespace Inchoo\StoreReview\Controller\Adminhtml\Review;
 
-use Magento\Framework\App\Action\Action;
+use Magento\Backend\App\Action;
 use Magento\Framework\App\Action\Context;
 
 class Delete extends Action
@@ -26,6 +26,11 @@ class Delete extends Action
         $this->dataResource = $dataResource;
         $this->dataModelFactory = $dataModelFactory;
         $this->session = $session;
+    }
+
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Inchoo_StoreReview::review');
     }
 
     public function execute()
