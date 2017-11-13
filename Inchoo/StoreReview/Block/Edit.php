@@ -58,7 +58,8 @@ class Edit extends Template
         Customer $customerResource,
         CustomerFactory $customerFactory,
         Session $session
-    ) {
+    )
+    {
         parent::__construct($context);
 
         $this->customerResource = $customerResource;
@@ -72,8 +73,8 @@ class Edit extends Template
         return parent::_prepareLayout();
     }
 
-    protected function getFormAction(){
-
+    public function getFormAction()
+    {
         return $this->getUrl('storereview/index/editpost', ['_secure' => true]);
     }
 
