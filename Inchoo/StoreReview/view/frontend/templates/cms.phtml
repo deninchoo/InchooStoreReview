@@ -6,9 +6,9 @@ $reviews = $this->execute(); ?>
 <table class="table">
     <?php foreach ($reviews as $review): ?>
         <tr>
-            <td><?= $review->getCustomerName() ?></td>
-            <td><?= $review->getTitle() ?></td>
-            <td><?= $review->getReview() ?></td>
+            <td><?= $block->escapeHtml($review->getCustomerName()) ?></td>
+            <td><?= $block->escapeHtml($review->getTitle()) ?></td>
+            <td><?= $block->escapeHtml($review->getReview()) ?></td>
         </tr>
     <?php endforeach; ?>
 </table>
