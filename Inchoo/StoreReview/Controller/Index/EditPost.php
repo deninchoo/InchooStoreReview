@@ -39,17 +39,13 @@ class EditPost extends Action
 
     public function execute()
     {
-        // TODO refactor
-        $data = $this->getRequest()->getPostValue();
-        //$isLoggedIn = $this->session->isLoggedIn();
         $customerId = $this->session->getCustomer()->getId();
         $storeReview = $this->reviewFactory->create();
         $this->reviewResource->load($storeReview, $customerId, 'customer_id');
         $customerReviewId = $storeReview->getReviewId();
-
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
-        if ($data) {
+
+        if ($customerReviewId) {
             /** @var \Inchoo\StoreReview\Model\Review $model */
             $model = $this->reviewFactory->create();
 
@@ -57,24 +53,20 @@ class EditPost extends Action
             $model->setReviewId($customerReviewId);
             $model->setStatusId(2);
 
-            if ($customerReviewId) {
-
-                try {
-                    $this->reviewResource->save($model);
-                    $this->messageManager->addSuccessMessage('Store Review successfully saved');
-                    if ($this->getRequest()->getParam('back')) {
-                        return $resultRedirect->setPath('*/*/edit', ['review_id' => $model->getId(), '_current' => true]);
-                    }
-                    return $resultRedirect->setPath('*/*/');
-                } catch (\Magento\Framework\Exception\LocalizedException $e) {
-                    $this->messageManager->addErrorMessage($e->getMessage());
-                } catch (\RuntimeException $e) {
-                    $this->messageManager->addErrorMessage($e->getMessage());
-                } catch (\Exception $e) {
-                    $this->messageManager->addErrorMessage($e, __('Something went wrong while saving the Store Review.'));
+            try {
+                $this->reviewResource->save($model);
+                $this->messageManager->addSuccessMessage('Store Review successfully saved');
+                if ($this->getRequest()->getParam('back')) {
+                    return $resultRedirect->setPath('*/*/edit', ['review_id' => $model->getId(), '_current' => true]);
                 }
+                return $resultRedirect->setPath('*/*/');
+            } catch (\Magento\Framework\Exception\LocalizedException $e) {
+                $this->messageManager->addErrorMessage($e->getMessage());
+            } catch (\RuntimeException $e) {
+                $this->messageManager->addErrorMessage($e->getMessage());
+            } catch (\Exception $e) {
+                $this->messageManager->addErrorMessage($e, __('Something went wrong while saving the Store Review.'));
             }
+            return $resultRedirect->setPath('*/*/');
         }
-        return $resultRedirect->setPath('*/*/');
     }
-}

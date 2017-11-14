@@ -12,6 +12,7 @@ class Delete extends Action
     protected $reviewModelFactory;
     protected $session;
     protected $objectManager;
+    protected $repo;
 
 
     public function __construct(
@@ -19,6 +20,7 @@ class Delete extends Action
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Inchoo\StoreReview\Model\ResourceModel\Review $reviewResource,
         \Inchoo\StoreReview\Model\ReviewFactory $reviewModelFactory,
+        \Inchoo\StoreReview\Model\StoreReviewRepository $repo,
         \Magento\Customer\Model\Session $session
     )
     {
@@ -26,6 +28,7 @@ class Delete extends Action
         $this->objectManager = $objectManager;
         $this->reviewResource = $reviewResource;
         $this->reviewModelFactory = $reviewModelFactory;
+        $this->repo = $repo;
         $this->session = $session;
     }
 
@@ -44,18 +47,13 @@ class Delete extends Action
     public function execute()
     {
         $resultRedirect = $this->resultRedirectFactory->create();
-
+        $customerId = $this->session->getCustomer()->getId();
         $reviewId = $this->getRequest()->getParam('review_id');
-        $repo = $this->objectManager->get('Inchoo\StoreReview\Model\StoreReviewRepository');
-        $page = $repo->getbyId($reviewId);
-        $customerId = $page->getCustomerId();
-        $currentCustomerId = $this->session->getCustomer()->getId();
-        $isLoggedIn = $this->session->isLoggedIn();
+        $page = $this->repo->getbyId($reviewId);
 
-        if ($customerId == $currentCustomerId && $isLoggedIn) {
-
+        if ($customerId == $page->getCustomerId()) {
             try {
-                $repo->delete($page);
+                $this->repo->delete($page);
                 return $resultRedirect->setPath('*/*/');
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
@@ -65,7 +63,6 @@ class Delete extends Action
                 $this->messageManager->addErrorMessage($e, __('Something went wrong while saving the Store Review.'));
             }
         }
-
         return $resultRedirect->setPath('*/*/');
     }
 }
