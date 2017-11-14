@@ -38,7 +38,8 @@ class ReviewEmailSender implements ObserverInterface
     {
         if ($this->reviewEmailConfig->isEnabled()) {
             $templateVars = array(
-                'title' => $observer->getEvent()->getTitle()
+                'title' => $observer->getEvent()->getTitle(),
+                'review' => $observer->getEvent()->getReview()
             );
             $transport = $this->transportBuilder
                 ->setTemplateIdentifier($this->reviewEmailConfig->emailTemplate())

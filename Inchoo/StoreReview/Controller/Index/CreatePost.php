@@ -65,7 +65,7 @@ class CreatePost extends Action
                 $this->reviewResource->save($model);
                 $this->managerInterface->dispatch(
                     'store_review_created',
-                    ['title' => $model->getTitle()]
+                    ['title' => $model->getTitle(), 'review' => $model->getReview()]
                 );
                 $this->messageManager->addSuccessMessage('Store Review successfully saved');
                 if ($this->getRequest()->getParam('back')) {
