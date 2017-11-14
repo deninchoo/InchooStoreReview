@@ -3,7 +3,7 @@
 namespace Inchoo\StoreReview\Block;
 
 //use Magento\Framework\View\Element\Template\Context;
-//use Inchoo\StoreReview\Api\Data\StoreReviewInterface;
+//use Inchoo\StoreReview\Api\Review\StoreReviewInterface;
 //use Inchoo\StoreReview\Api\StoreReviewRepositoryInterface;
 //use Magento\Framework\Api\FilterBuilder;
 //use Magento\Framework\Api\SearchCriteriaBuilder;
@@ -42,28 +42,28 @@ namespace Inchoo\StoreReview\Block;
 //}
 
 use Magento\Framework\View\Element\Template\Context;
-use Inchoo\StoreReview\Model\ResourceModel\Customer;
+use Inchoo\StoreReview\Model\ResourceModel\Review;
 use Magento\Framework\View\Element\Template;
-use Inchoo\StoreReview\Model\CustomerFactory;
+use Inchoo\StoreReview\Model\ReviewFactory;
 use Magento\Customer\Model\Session;
 
 class Edit extends Template
 {
-    protected $customerResource;
-    protected $customerFactory;
+    protected $reviewResource;
+    protected $reviewFactory;
     protected $_session;
 
     public function __construct(
         Context $context,
-        Customer $customerResource,
-        CustomerFactory $customerFactory,
+        Review $reviewResource,
+        ReviewFactory $reviewFactory,
         Session $session
     )
     {
         parent::__construct($context);
 
-        $this->customerResource = $customerResource;
-        $this->customerFactory = $customerFactory;
+        $this->reviewResource = $reviewResource;
+        $this->reviewFactory = $reviewFactory;
         $this->_session = $session;
     }
 
@@ -83,11 +83,9 @@ class Edit extends Template
      */
     public function execute()
     {
-        $storeReview = $this->customerFactory->create();
+        $storeReview = $this->reviewFactory->create();
         $id = $this->_session->getCustomer()->getId();
-        $this->customerResource->load($storeReview, $id);
+        $this->reviewResource->load($storeReview, $id, 'customer_id');
         return $storeReview;
     }
-
-    //if($this->_session->isLoggedIn()){}
 }

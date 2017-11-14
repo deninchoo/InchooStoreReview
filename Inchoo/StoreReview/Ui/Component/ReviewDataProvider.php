@@ -8,7 +8,7 @@ class ReviewDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
      * @param $name
      * @param $primaryFieldName
      * @param $requestFieldName
-     * @param \Inchoo\StoreReview\Model\ResourceModel\Data\CollectionFactory $collectionFactory
+     * @param \Inchoo\StoreReview\Model\ResourceModel\Review\CollectionFactory $collectionFactory
      * @param array $meta
      * @param array $data
      */
@@ -16,7 +16,7 @@ class ReviewDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         $name,
         $primaryFieldName,
         $requestFieldName,
-        \Inchoo\StoreReview\Model\ResourceModel\Data\CollectionFactory $collectionFactory,
+        \Inchoo\StoreReview\Model\ResourceModel\Review\CollectionFactory $collectionFactory,
         array $meta = [],
         array $data = []
     ) {

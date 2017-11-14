@@ -5,11 +5,11 @@ namespace Inchoo\StoreReview\Model;
 use Magento\Framework\Model\AbstractModel;
 use Inchoo\StoreReview\Api\Data\StoreReviewInterface;
 
-class Data extends AbstractModel implements StoreReviewInterface
+class Review extends AbstractModel implements StoreReviewInterface
 {
     protected function _construct()
     {
-        $this->_init(\Inchoo\StoreReview\Model\ResourceModel\Data::class);
+        $this->_init(\Inchoo\StoreReview\Model\ResourceModel\Review::class);
     }
 
     public function setTitle($storeReviewTitle)

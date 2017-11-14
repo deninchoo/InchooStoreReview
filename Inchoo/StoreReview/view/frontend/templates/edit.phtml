@@ -29,7 +29,6 @@ $data = $this->execute();
     </fieldset>
     <div class="actions-toolbar">
         <div class="primary">
-            <input type="hidden" name="hideit" id="hideit" value="<?= $block->escapeHtml($data->getCustomerId()) ?>" />
             <button type="submit" title="<?= $block->escapeHtmlAttr(__('Submit')) ?>" class="action submit primary">
                 <span><?= $block->escapeHtml(__('Submit')) ?></span>
             </button>

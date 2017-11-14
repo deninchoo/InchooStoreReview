@@ -6,26 +6,25 @@ use Magento\Backend\App\Action;
 
 class Insert extends Action
 {
-    protected $dataResource;
-    protected $dataModelFactory;
+    protected $reviewResource;
+    protected $reviewModelFactory;
     protected $session;
     protected $storeManagerInterface;
 
     /**
      * @param Action\Context $context
-     * @param \Magento\Backend\Helper\Js $jsHelper
      */
     public function __construct(
         Action\Context $context,
-        \Inchoo\StoreReview\Model\ResourceModel\Data $dataResource,
-        \Inchoo\StoreReview\Model\DataFactory $dataModelFactory,
+        \Inchoo\StoreReview\Model\ResourceModel\Review $reviewResource,
+        \Inchoo\StoreReview\Model\ReviewFactory $reviewModelFactory,
         \Magento\Customer\Model\Session $session,
         \Magento\Store\Model\StoreManagerInterface $storeManagerInterface
     )
     {
         parent::__construct($context);
-        $this->dataResource = $dataResource;
-        $this->dataModelFactory = $dataModelFactory;
+        $this->reviewResource = $reviewResource;
+        $this->reviewModelFactory = $reviewModelFactory;
         $this->session = $session;
         $this->storeManagerInterface = $storeManagerInterface;
     }
@@ -52,8 +51,8 @@ class Insert extends Action
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($data) {
-            /** @var \Inchoo\StoreReview\Model\Data $model */
-            $model = $this->dataModelFactory->create();
+            /** @var \Inchoo\StoreReview\Model\Review $model */
+            $model = $this->reviewModelFactory->create();
 
             //$model->setData($data);
             $model->setCustomerId(null);
@@ -64,7 +63,7 @@ class Insert extends Action
             $model->setStoreId($this->getRequest()->getParam('store_id'));
 
             try {
-                $this->dataResource->save($model);
+                $this->reviewResource->save($model);
 
                 $this->messageManager->addSuccessMessage('Store Review successfully saved');
                 if ($this->getRequest()->getParam('back')) {

@@ -8,22 +8,22 @@ use Magento\Framework\App\Action\Context;
 
 class CreatePost extends Action
 {
-    protected $dataResource;
-    protected $dataModelFactory;
+    protected $reviewResource;
+    protected $reviewModelFactory;
     protected $session;
     protected $storeManagerInterface;
 
     public function __construct(
         Context $context,
-        \Inchoo\StoreReview\Model\ResourceModel\Data $dataResource,
-        \Inchoo\StoreReview\Model\DataFactory $dataModelFactory,
+        \Inchoo\StoreReview\Model\ResourceModel\Review $reviewResource,
+        \Inchoo\StoreReview\Model\ReviewFactory $reviewModelFactory,
         \Magento\Customer\Model\Session $session,
         \Magento\Store\Model\StoreManagerInterface $storeManagerInterface
     )
     {
         parent::__construct($context);
-        $this->dataResource = $dataResource;
-        $this->dataModelFactory = $dataModelFactory;
+        $this->reviewResource = $reviewResource;
+        $this->reviewModelFactory = $reviewModelFactory;
         $this->session = $session;
         $this->storeManagerInterface = $storeManagerInterface;
     }
@@ -38,8 +38,8 @@ class CreatePost extends Action
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($data) {
-            /** @var \Inchoo\StoreReview\Model\Data $model */
-            $model = $this->dataModelFactory->create();
+            /** @var \Inchoo\StoreReview\Model\Review $model */
+            $model = $this->reviewModelFactory->create();
 
             $model->setData($data);
             $model->setCustomerId($this->session->getCustomer()->getId());
@@ -49,9 +49,8 @@ class CreatePost extends Action
 
             if ($isLoggedIn) {
                 try {
-                    $this->dataResource->save($model);
+                    $this->reviewResource->save($model);
                     $this->messageManager->addSuccessMessage('Store Review successfully saved');
-                    $this->_objectManager->get('Magento\Backend\Model\Session')->setFormData(false);
                     if ($this->getRequest()->getParam('back')) {
                         return $resultRedirect->setPath('*/*/edit', ['review_id' => $model->getId(), '_current' => true]);
                     }
@@ -64,7 +63,6 @@ class CreatePost extends Action
                     $this->messageManager->addErrorMessage($e, __('Something went wrong while saving the Store Review.'));
                 }
 
-                $this->_getSession()->setFormData($data);
                 return $resultRedirect->setPath('*/*/edit', ['review_id' => $this->getRequest()->getParam('review_id')]);
             }
         }

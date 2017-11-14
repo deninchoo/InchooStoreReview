@@ -19,12 +19,12 @@ class StoreReviewRepository implements StoreReviewRepositoryInterface
     protected $storeReviewModelFactory;
 
     /**
-     * @var \Inchoo\StoreReview\Model\ResourceModel\Data
+     * @var \Inchoo\StoreReview\Model\ResourceModel\Review
      */
     protected $storeReviewResource;
 
     /**
-     * @var \Inchoo\StoreReview\Model\ResourceModel\Data\CollectionFactory
+     * @var \Inchoo\StoreReview\Model\ResourceModel\Review\CollectionFactory
      */
     protected $storeReviewCollectionFactory;
 
@@ -41,8 +41,8 @@ class StoreReviewRepository implements StoreReviewRepositoryInterface
 
     public function __construct(
         \Inchoo\StoreReview\Api\Data\StoreReviewInterfaceFactory $storeReviewModelFactory,
-        \Inchoo\StoreReview\Model\ResourceModel\Data $storeReviewResource,
-        \Inchoo\StoreReview\Model\ResourceModel\Data\CollectionFactory $storeReviewCollectionFactory,
+        \Inchoo\StoreReview\Model\ResourceModel\Review $storeReviewResource,
+        \Inchoo\StoreReview\Model\ResourceModel\Review\CollectionFactory $storeReviewCollectionFactory,
         \Inchoo\StoreReview\Api\Data\StoreReviewSearchResultsInterfaceFactory $searchResultsFactory,
         CollectionProcessorInterface $collectionProcessor
     ) {
@@ -105,7 +105,7 @@ class StoreReviewRepository implements StoreReviewRepositoryInterface
      */
     public function getList(SearchCriteriaInterface $searchCriteria)
     {
-        /** @var \Inchoo\StoreReview\Model\ResourceModel\Data\Collection $collection */
+        /** @var \Inchoo\StoreReview\Model\ResourceModel\Review\Collection $collection */
         $collection = $this->storeReviewCollectionFactory->create();
 
         $this->collectionProcessor->process($searchCriteria, $collection);

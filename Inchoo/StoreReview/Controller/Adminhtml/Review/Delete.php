@@ -7,8 +7,8 @@ use Magento\Framework\App\Action\Context;
 
 class Delete extends Action
 {
-    protected $customerResource;
-    protected $customerModelFactory;
+    protected $reviewResource;
+    protected $reviewModelFactory;
     protected $session;
     protected $objectManager;
 
@@ -16,15 +16,15 @@ class Delete extends Action
     public function __construct(
         Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
-        \Inchoo\StoreReview\Model\ResourceModel\Data $dataResource,
-        \Inchoo\StoreReview\Model\DataFactory $dataModelFactory,
+        \Inchoo\StoreReview\Model\ResourceModel\Review $reviewResource,
+        \Inchoo\StoreReview\Model\ReviewFactory $reviewModelFactory,
         \Magento\Customer\Model\Session $session
     )
     {
         parent::__construct($context);
         $this->objectManager = $objectManager;
-        $this->dataResource = $dataResource;
-        $this->dataModelFactory = $dataModelFactory;
+        $this->reviewResource = $reviewResource;
+        $this->reviewModelFactory = $reviewModelFactory;
         $this->session = $session;
     }
 
@@ -35,7 +35,6 @@ class Delete extends Action
 
     public function execute()
     {
-
 
         $resultRedirect = $this->resultRedirectFactory->create();
 
@@ -53,9 +52,6 @@ class Delete extends Action
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e, __('Something went wrong while saving the Store Review.'));
         }
-
-        $this->_getSession()->setFormData($data);
-        return $resultRedirect->setPath('*/*/edit', ['review_id' => $this->getRequest()->getParam('review_id')]);
 
         return $resultRedirect->setPath('*/*/');
     }

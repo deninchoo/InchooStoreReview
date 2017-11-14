@@ -2,10 +2,10 @@
 
 namespace Inchoo\StoreReview\Model\ResourceModel;
 
-class Data extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class Review extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
     /**
-     * Initialize news Resource
+     * Initialize review Resource
      *
      * @return void
      */

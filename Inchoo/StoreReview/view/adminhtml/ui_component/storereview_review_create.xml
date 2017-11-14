@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
-    
+
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">storereview_review_create.review_create_data_source</item>
@@ -28,7 +28,7 @@
             </button>
         </buttons>
     </settings>
-    
+
     <dataSource name="review_create_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
@@ -45,7 +45,7 @@
             </settings>
         </dataProvider>
     </dataSource>
-    
+
     <fieldset name="general">
         <settings>
             <label />
@@ -86,7 +86,6 @@
                 <dataScope>review</dataScope>
             </settings>
         </textarea>
-
         <field name="statuses">
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">Inchoo\StoreReview\Model\Options\Source\Statuses</item>

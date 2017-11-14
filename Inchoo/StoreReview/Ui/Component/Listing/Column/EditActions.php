@@ -10,7 +10,7 @@ use Magento\Ui\Component\Listing\Columns\Column;
 class EditActions extends Column
 {
     /**
-     * Prepare Data Source
+     * Prepare Review Source
      *
      * @param array $dataSource
      * @return array

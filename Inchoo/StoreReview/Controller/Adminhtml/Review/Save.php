@@ -6,22 +6,21 @@ use Magento\Backend\App\Action;
 
 class Save extends Action
 {
-    protected $dataResource;
-    protected $dataModelFactory;
+    protected $reviewResource;
+    protected $reviewModelFactory;
 
     /**
      * @param Action\Context $context
-     * @param \Magento\Backend\Helper\Js $jsHelper
      */
     public function __construct(
         Action\Context $context,
-        \Inchoo\StoreReview\Model\ResourceModel\Data $dataResource,
-        \Inchoo\StoreReview\Model\DataFactory $dataModelFactory
+        \Inchoo\StoreReview\Model\ResourceModel\Review $reviewResource,
+        \Inchoo\StoreReview\Model\ReviewFactory $reviewModelFactory
     )
     {
         parent::__construct($context);
-        $this->dataResource = $dataResource;
-        $this->dataModelFactory = $dataModelFactory;
+        $this->reviewResource = $reviewResource;
+        $this->reviewModelFactory = $reviewModelFactory;
     }
 
     /**
@@ -44,8 +43,8 @@ class Save extends Action
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($data) {
-            /** @var \Inchoo\StoreReview\Model\Data $model */
-            $model = $this->dataModelFactory->create();
+            /** @var \Inchoo\StoreReview\Model\Review $model */
+            $model = $this->reviewModelFactory->create();
 
             $model->setTitle($this->getRequest()->getParam('title'));
             $model->setReviewId($this->getRequest()->getParam('review_id'));
@@ -55,10 +54,9 @@ class Save extends Action
 
             try {
 
-                $this->dataResource->save($model);
+                $this->reviewResource->save($model);
 
                 $this->messageManager->addSuccessMessage('Store Review successfully saved');
-                $this->_objectManager->get('Magento\Backend\Model\Session')->setFormData(false);
                 if ($this->getRequest()->getParam('back')) {
                     return $resultRedirect->setPath('*/*/edit', ['review_id' => $model->getId(), '_current' => true]);
                 }
@@ -70,9 +68,6 @@ class Save extends Action
             } catch (\Exception $e) {
                 $this->messageManager->addErrorMessage($e, __('Something went wrong while saving the Store Review.'));
             }
-
-            $this->_getSession()->setFormData($data);
-            return $resultRedirect->setPath('*/*/edit', ['review_id' => $this->getRequest()->getParam('review_id')]);
         }
         return $resultRedirect->setPath('*/*/');
     }

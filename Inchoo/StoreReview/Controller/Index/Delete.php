@@ -7,8 +7,8 @@ use Magento\Framework\App\Action\Context;
 
 class Delete extends Action
 {
-    protected $customerResource;
-    protected $customerModelFactory;
+    protected $reviewResource;
+    protected $reviewModelFactory;
     protected $session;
     protected $objectManager;
 
@@ -16,15 +16,15 @@ class Delete extends Action
     public function __construct(
         Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
-        \Inchoo\StoreReview\Model\ResourceModel\Data $dataResource,
-        \Inchoo\StoreReview\Model\DataFactory $dataModelFactory,
+        \Inchoo\StoreReview\Model\ResourceModel\Review $reviewResource,
+        \Inchoo\StoreReview\Model\ReviewFactory $reviewModelFactory,
         \Magento\Customer\Model\Session $session
     )
     {
         parent::__construct($context);
         $this->objectManager = $objectManager;
-        $this->dataResource = $dataResource;
-        $this->dataModelFactory = $dataModelFactory;
+        $this->reviewResource = $reviewResource;
+        $this->reviewModelFactory = $reviewModelFactory;
         $this->session = $session;
     }
 

@@ -3,49 +3,51 @@
 namespace Inchoo\StoreReview\Controller\Index;
 
 use Magento\Framework\App\Action\Action;
-use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\Action\Context;
 
 class EditPost extends Action
 {
-    protected $customerResource;
-    protected $customerModelFactory;
+    protected $reviewResource;
+    protected $reviewFactory;
     protected $session;
 
     public function __construct(
         Context $context,
-        \Inchoo\StoreReview\Model\ResourceModel\Customer $customerResource,
-        \Inchoo\StoreReview\Model\CustomerFactory $customerModelFactory,
+        \Inchoo\StoreReview\Model\ResourceModel\Review $reviewResource,
+        \Inchoo\StoreReview\Model\ReviewFactory $reviewFactory,
         \Magento\Customer\Model\Session $session
     )
     {
         parent::__construct($context);
-        $this->customerResource = $customerResource;
-        $this->customerModelFactory = $customerModelFactory;
+        $this->reviewResource = $reviewResource;
+        $this->reviewFactory = $reviewFactory;
         $this->session = $session;
     }
 
     public function execute()
     {
+        // TODO refactor
         $data = $this->getRequest()->getPostValue();
         $isLoggedIn = $this->session->isLoggedIn();
-        $customerId = $this->getRequest()->getParam('hideit');
-        $currentCustomerId = $this->session->getCustomer()->getId();
+        $customerId = $this->session->getCustomer()->getId();
+        $storeReview = $this->reviewFactory->create();
+        $this->reviewResource->load($storeReview, $customerId, 'customer_id');
+        $customerReviewId = $storeReview->getReviewId();
 
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($data) {
-            /** @var \Inchoo\StoreReview\Model\Data $model */
-            $model = $this->customerModelFactory->create();
+            /** @var \Inchoo\StoreReview\Model\Review $model */
+            $model = $this->reviewFactory->create();
 
             $model->setData($data);
-            $model->setCustomerId($currentCustomerId);
+            $model->setReviewId($customerReviewId);
             $model->setStatusId(2);
 
-            if ($customerId == $currentCustomerId && $isLoggedIn) {
+            if ($customerReviewId && $isLoggedIn) {
 
                 try {
-                    $this->customerResource->save($model);
+                    $this->reviewResource->save($model);
                     $this->messageManager->addSuccessMessage('Store Review successfully saved');
                     if ($this->getRequest()->getParam('back')) {
                         return $resultRedirect->setPath('*/*/edit', ['review_id' => $model->getId(), '_current' => true]);
@@ -58,7 +60,6 @@ class EditPost extends Action
                 } catch (\Exception $e) {
                     $this->messageManager->addErrorMessage($e, __('Something went wrong while saving the Store Review.'));
                 }
-
             }
         }
         return $resultRedirect->setPath('*/*/');

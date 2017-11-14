@@ -19,13 +19,14 @@ class StoreView extends Column
         \Inchoo\StoreReview\Model\StoresFactory $dataFactory,
         array $components = [],
         array $data = []
-    ) {
+    )
+    {
         $this->dataFactory = $dataFactory;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
     /**
-     * Prepare Data Source
+     * Prepare Review Source
      *
      * @param array $dataSource
      * @return array
@@ -37,9 +38,9 @@ class StoreView extends Column
                 if (isset($item['store_id'])) {
 
 
-                    if($this->getData('name') == "store_id"){
+                    if ($this->getData('name') == "store_id") {
                         $store = $this->dataFactory->create()->load($item['store_id']);
-                        $item[$this->getData('name')]=[$store->getName()];
+                        $item[$this->getData('name')] = [$store->getName()];
 
                     }
                 }
