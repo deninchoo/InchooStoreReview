@@ -4,6 +4,7 @@ namespace Inchoo\StoreReview\Controller\Index;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\RequestInterface;
 
 class EditPost extends Action
 {
@@ -24,11 +25,23 @@ class EditPost extends Action
         $this->session = $session;
     }
 
+    /**
+     * @param RequestInterface $request
+     * @return \Magento\Framework\App\ResponseInterface
+     */
+    public function dispatch(RequestInterface $request)
+    {
+        if (!$this->session->authenticate()) {
+            $this->_actionFlag->set('', self::FLAG_NO_DISPATCH, true);
+        }
+        return parent::dispatch($request);
+    }
+
     public function execute()
     {
         // TODO refactor
         $data = $this->getRequest()->getPostValue();
-        $isLoggedIn = $this->session->isLoggedIn();
+        //$isLoggedIn = $this->session->isLoggedIn();
         $customerId = $this->session->getCustomer()->getId();
         $storeReview = $this->reviewFactory->create();
         $this->reviewResource->load($storeReview, $customerId, 'customer_id');
@@ -44,7 +57,7 @@ class EditPost extends Action
             $model->setReviewId($customerReviewId);
             $model->setStatusId(2);
 
-            if ($customerReviewId && $isLoggedIn) {
+            if ($customerReviewId) {
 
                 try {
                     $this->reviewResource->save($model);

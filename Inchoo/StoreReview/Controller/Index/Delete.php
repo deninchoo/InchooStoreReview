@@ -4,6 +4,7 @@ namespace Inchoo\StoreReview\Controller\Index;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\RequestInterface;
 
 class Delete extends Action
 {
@@ -26,6 +27,18 @@ class Delete extends Action
         $this->reviewResource = $reviewResource;
         $this->reviewModelFactory = $reviewModelFactory;
         $this->session = $session;
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return \Magento\Framework\App\ResponseInterface
+     */
+    public function dispatch(RequestInterface $request)
+    {
+        if (!$this->session->authenticate()) {
+            $this->_actionFlag->set('', self::FLAG_NO_DISPATCH, true);
+        }
+        return parent::dispatch($request);
     }
 
     public function execute()
