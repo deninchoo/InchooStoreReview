@@ -12,13 +12,15 @@ class CreatePost extends Action
     protected $reviewModelFactory;
     protected $session;
     protected $storeManagerInterface;
+    protected $managerInterface;
 
     public function __construct(
         Context $context,
         \Inchoo\StoreReview\Model\ResourceModel\Review $reviewResource,
         \Inchoo\StoreReview\Model\ReviewFactory $reviewModelFactory,
         \Magento\Customer\Model\Session $session,
-        \Magento\Store\Model\StoreManagerInterface $storeManagerInterface
+        \Magento\Store\Model\StoreManagerInterface $storeManagerInterface,
+        \Magento\Framework\Event\ManagerInterface $managerInterface
     )
     {
         parent::__construct($context);
@@ -26,6 +28,7 @@ class CreatePost extends Action
         $this->reviewModelFactory = $reviewModelFactory;
         $this->session = $session;
         $this->storeManagerInterface = $storeManagerInterface;
+        $this->managerInterface = $managerInterface;
     }
 
     /**
@@ -60,6 +63,10 @@ class CreatePost extends Action
 
             try {
                 $this->reviewResource->save($model);
+                $this->managerInterface->dispatch(
+                    'store_review_created',
+                    ['title' => $model->getTitle()]
+                );
                 $this->messageManager->addSuccessMessage('Store Review successfully saved');
                 if ($this->getRequest()->getParam('back')) {
                     return $resultRedirect->setPath('*/*/edit', ['review_id' => $model->getId(), '_current' => true]);

@@ -39,6 +39,7 @@ class EditPost extends Action
 
     public function execute()
     {
+        $data = $this->getRequest()->getPostValue();
         $customerId = $this->session->getCustomer()->getId();
         $storeReview = $this->reviewFactory->create();
         $this->reviewResource->load($storeReview, $customerId, 'customer_id');
@@ -70,3 +71,4 @@ class EditPost extends Action
             return $resultRedirect->setPath('*/*/');
         }
     }
+}
