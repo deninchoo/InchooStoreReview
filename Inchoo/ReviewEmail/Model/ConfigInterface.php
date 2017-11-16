@@ -31,7 +31,7 @@ interface ConfigInterface
     /**
      * Enabled config path
      */
-    const XML_PATH_ENABLED = 'storeReview/email/enabled';
+    const XML_PATH_ENABLED = 'storeReview/notification_enable/enabled';
 
     /**
      * Check if contacts module is enabled
